@@ -1,21 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
-    var checkConnectionButton = document.getElementById('checkConnectionButton');
-    var connectionStatus = document.getElementById('connectionStatus');
-
-    checkConnectionButton.addEventListener('click', function () {
-        Trello.authorize({
-            interactive: true,
-            type: 'popup',
-            success: function () {
-                connectionStatus.textContent = "Conexión exitosa a Trello";
-            },
-            error: function () {
-                connectionStatus.textContent = "No estás conectado a Trello";
-            }
-        });
-    });
-});
-
+TrelloPowerUp.initialize({
+    'card-buttons': function(t, options){
+      return [{
+        icon: 'https://cdn.glitch.com/1b42d7fe-bda8-4af8-a6c8-eff0cea9e08a%2Frocket-ship.png?1494946700421',
+        text: 'Estimate Size',
+      }];
+    },
+  });
 
 
 
