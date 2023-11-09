@@ -43,5 +43,32 @@ TrelloPowerUp.initialize({
           }
         }]
       });
-    }
+    },
+    
+    'list-after-create': function(t, options) {
+      // Obtén el correo por defecto
+      var defaultEmail = "hernandezazael9901@gmail.com";
+      // Obtén el ID de la lista recién creada
+      var listId = options.data.list.id;
+      // Crea un checklist y asígnalo al correo por defecto
+      return t.card.createChecklist({
+        title: 'Checklist por defecto',
+        idCard: options.data.card.id,
+      })
+      .then(function(checklist) {
+        // Asigna el correo por defecto a todos los items del checklist
+        return t.checklist.addChecklistItem({
+          idChecklist: checklist.id,
+          name: 'Asignar a ' + defaultEmail,
+          pos: 'top',
+        });
+      })
+      .then(function() {
+        return {
+          // Indica que la operación fue exitosa
+          message: 'Checklist creado y asignado automáticamente',
+        };
+      });
+    },
   });
+
