@@ -45,24 +45,29 @@ TrelloPowerUp.initialize({
 
 function asignarChecklistAutomatico(t) {
     var defaultEmail = "azael.hernandez@ramirezvargasabogados.com";
-
+    
+    var cardId = t.getContext().card;    
     return t.card.createChecklist({
-        title: 'Checklist por defecto',
-        idCard: t.getContext().card,
-    })
-    .then(function(checklist) {
-        return t.checklist.addChecklistItem({
-            idChecklist: checklist.id,
-            name: 'Asignar a ' + defaultEmail,
-            pos: 'top',
-        });
-    })
-    .then(function() {
-        return t.closePopup();
-    })
-    .then(function() {
-        return {
-            message: 'Checklist creado y asignado automáticamente',
-        };
-    });
+      title: 'Checklist por defecto',
+      idCard: cardId,
+  })
+  .then(function(checklist) {
+      return t.checklist.addChecklistItem({
+          idChecklist: checklist.id,
+          name: 'Asignar a ' + defaultEmail,
+          pos: 'top',
+      });
+  })
+  .then(function() {
+      return t.closePopup();
+  })
+  .then(function() {
+      return {
+          message: 'Checklist creado y asignado automáticamente',
+      };
+  });
 }
+
+
+
+
