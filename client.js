@@ -44,30 +44,33 @@ TrelloPowerUp.initialize({
 });
 
 function asignarChecklistAutomatico(t) {
-    var defaultEmail = "azael.hernandez@ramirezvargasabogados.com";
-    
-    var cardId = t.getContext().card;    
-    return t.card.createChecklist({
-      title: 'Checklist por defecto',
-      idCard: cardId,
+  var defaultEmail = "azael.hernandez@ramirezvargasabogados.com";
+  // Obtiene el ID de la tarjeta desde el contexto
+  var cardId = t.getContext().card;
+  // Usa t.api para interactuar con la API de Trello directamente
+  return t.api(`/cards/${cardId}/checklists`, 'post', {
+      name: 'Checklist por defecto',
   })
   .then(function(checklist) {
-      return t.checklist.addChecklistItem({
-          idChecklist: checklist.id,
+      // Añade un elemento al checklist
+      return t.api(`/checklists/${checklist.id}/checkItems`, 'post', {
           name: 'Asignar a ' + defaultEmail,
-          pos: 'top',
       });
   })
   .then(function() {
+      // Cierra el popup después de completar las acciones
       return t.closePopup();
   })
   .then(function() {
       return {
           message: 'Checklist creado y asignado automáticamente',
       };
+  })
+  .catch(function(error) {
+      console.error(error); // Registra cualquier error en la consola
+      // Manejar el error según sea necesario
   });
 }
-
 
 
 
