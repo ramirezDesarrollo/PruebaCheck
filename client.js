@@ -6,29 +6,30 @@ var DEFAULT_USER_EMAIL = "azael.hernandez@ramirezvargasabogados.com";
 function asignarChecklistAutomatico(t) {
   var cardId = t.getContext().card;
   // Crea un nuevo checklist
-  return t.api(`/cards/${cardId}/checklists`, 'post', {
-      name: 'Checklist por defecto',
+  return t.rest('POST', 'cards/' + cardId + '/checklists', {
+    name: 'Checklist por defecto',
   })
-  .then(function(checklist) {
-      // Añade un elemento al checklist
-      return t.api(`/checklists/${checklist.id}/checkItems`, 'post', {
-          name: 'Asignar a ' + DEFAULT_USER_EMAIL,
-      });
+  .then(function (checklist) {
+    // Añade un elemento al checklist
+    return t.rest('POST', 'checklists/' + checklist.id + '/checkItems', {
+      name: 'Asignar a ' + DEFAULT_USER_EMAIL,
+    });
   })
-  .then(function() {
-      // Cierra el popup después de completar las acciones
-      return t.closePopup();
+  .then(function () {
+    // Cierra el popup después de completar las acciones
+    return t.closePopup();
   })
-  .then(function() {
-      return {
-          message: 'Checklist creado y asignado automáticamente',
-      };
+  .then(function () {
+    return {
+      message: 'Checklist creado y asignado automáticamente',
+    };
   })
-  .catch(function(error) {
-      console.error(error); // Registra cualquier error en la consola
-      // Manejar el error según sea necesario
+  .catch(function (error) {
+    console.error(error); // Registra cualquier error en la consola
+    // Manejar el error según sea necesario
   });
 }
+
 
 
 TrelloPowerUp.initialize({
