@@ -27,5 +27,19 @@ TrelloPowerUp.initialize({
         }];
       });
     },
+
+    'card-detail-badges': function(t, options) {
+      return [{
+        title: 'Estimate',
+        color: 'red',
+        text: 'Large',
+        callback: function(t) {
+          return t.popup({
+            title: "Estimation",
+            url: 'estimate.html',
+          });
+        }
+      }]
+    }
   });
 
