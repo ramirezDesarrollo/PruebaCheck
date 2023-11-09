@@ -50,5 +50,13 @@ TrelloPowerUp.initialize({
       .then(function(authToken) {
         return { authorized: authToken != null }
       });
+    },
+
+    'show-authorization': function(t, options){
+      return t.popup({
+        title: 'Authorize 🥑 Account',
+        url: './auth.html',
+        height: 140,
+      });
     }
   });
