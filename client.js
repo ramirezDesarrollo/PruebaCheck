@@ -43,5 +43,12 @@ TrelloPowerUp.initialize({
           }
         }]
       });
+    },
+  
+    'authorization-status': function(t, options){
+      return t.get('member', 'private', 'authToken')
+      .then(function(authToken) {
+        return { authorized: authToken != null }
+      });
     }
   });
